@@ -97,7 +97,7 @@ int main()
     for(i=0;i<j;i++)
 	   {
            
-           result=strtok(s[i].Judge,delims);
+           result=strtok(s[i].Judge,delims);//youshu
            while(result!=NULL)
            {
                fs=atoi(result);
