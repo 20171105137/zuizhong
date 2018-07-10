@@ -32,7 +32,7 @@ struct student
     
     char Judge[200];
     
-    int* result = (int*)malloc(sizeof(int)*1);//”√malloc∫Ø ˝∂ØÃ¨∑÷≈‰ƒ⁄¥Ê
+    int* result = (int*)malloc(sizeof(int)*1);//用malloc函数设定评委
     
     int max;
     
@@ -44,7 +44,7 @@ struct student
     
 };
 
-struct student s[200];//∂®“Â“ª∏ˆ—ß…˙Ω·ππÃÂ
+struct student s[200];//定义一个学生结构体
 
 
 
@@ -56,18 +56,18 @@ int main()
     int a=0;
     int b=0;
     int d=0;
-    char header[100];//≈≈≥˝±ÌÕ∑
+    char header[100];//定义存放表头的
     
     FILE *filep1,*filep2;
     
     filep1 =fopen("/Users/s20171105137/Desktop/studentdata1.csv","r");
     
-    if(filep1==NULL)//ºÏ≤ÈŒƒº˛ «∑Ò¥Ê‘⁄
+    if(filep1==NULL)//检查文件是否存在
         
         
     {
         printf("NO SUCH FILE");
-        exit(-1);//÷–∂œ≥Ã–Ú‘À––
+        exit(-1);//中断终端程序
     }
     
     else
@@ -76,10 +76,13 @@ int main()
         
         fscanf(filep1,"%s",header);
         
-        while(!feof(filep1))//≈≈≥˝±ÌÕ∑
+        while(!feof(filep1))//读取表头
         {
             fscanf(filep1,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s",s[i].Stu_num,s[i].Name,s[i].Sex,&s[i].Birth,s[i].Class,s[i].Telph,s[i].Judge);
-            
+            for(a=0;a<d;a++)
+            {
+                fscanf(filep1,",%d",&s[i].result[a]);//按照，分隔符
+            }
             i++;
             
         }
@@ -98,14 +101,14 @@ int main()
            while(result!=NULL)
            {
                fs=atoi(result);
-               result = strtok(NULL, delims);//÷’÷π«–∏Ó
+               result = strtok(NULL, delims);//切割到文件末尾
                b++;
                s[i].result[a]=fs;
                a++;
            }
   	        a=0;
        }
-    d=b/i;//øÿ÷∆±»¥Û–°¥Œ ˝
+    d=b/i;//控制循环
     j=i;
      for(i=0;i<j;i++)
      {
@@ -113,24 +116,24 @@ int main()
      }
     i=j;
     for(i=0;i<j;i++)
+{
+    for(a=i;a<d;a++)//找最大最小值
     {
-        for(a=i;a<d;a++)
-        {
-            if(s[i].result[a]>s[i].max)
-                s[i].max=s[i].result[a];
-            if(s[i].result[a]<s[i].min)
-                s[i].min=s[i].result[a];
-        }
+        if(s[i].result[a]>s[i].max)
+         s[i].max=s[i].result[a];
+        if(s[i].result[a]<s[i].min)
+         s[i].min=s[i].result[a];
     }
+}
     i=j;
-    for(i=0;i<j;i++)   //º∆À„≥…º®
+    for(i=0;i<j;i++)   //计算成绩
+{
+    for(a=0;a<d;a++)
     {
-        for(a=0;a<d;a++)
-        {
-            s[i].score=s[i].result[a]+s[i].score;
-        }
-        s[i].Average=(s[i].score-s[i].max-s[i].min)/(d-2);
+    s[i].score=s[i].result[a]+s[i].score;
     }
+    s[i].Average=(s[i].score-s[i].max-s[i].min)/(d-2);
+}
     j=i;
     i=0;
     filep2=fopen("/Users/s20171105137/Desktop/studentdata2.csv","w");//chuangjianxinwenjian
@@ -140,17 +143,17 @@ int main()
         printf("%s,Average\n",header);
         while(i<j)
         {
-            fprintf(filep2,"%s,%s,%s,%s,%s,%s,",s[i].Stu_num,s[i].Name,s[i].Sex,s[i].Birth,s[i].Class,s[i].Telph);//¥Ú”°∏ˆ»À–≈œ¢
+            fprintf(filep2,"%s,%s,%s,%s,%s,%s,",s[i].Stu_num,s[i].Name,s[i].Sex,s[i].Birth,s[i].Class,s[i].Telph);//打印学生信息
             printf("%s,%s,%s,%s,%s,%s,",s[i].Stu_num,s[i].Name,s[i].Sex,s[i].Birth,s[i].Class,s[i].Telph);
             
             for(a=0;a<d;a++)
             {
-                fprintf(filep2,"%d,",s[i].result[a]);//¥Ú”°∏ˆ»À≥…º®
+                fprintf(filep2,"%d,",s[i].result[a]);//打印原成绩
                 printf("%d,",s[i].result[a]);
             }
-            fprintf(filep2,"%d",s[i].Average);
-            printf("%d",s[i].Average);
-            fprintf(filep2,"\n");//Ω´◊Ó÷’Ω·π˚¥Ú”°‘⁄∆¡ƒª
+            fprintf(filep2,"%d\n",s[i].Average);
+            printf("%d\n",s[i].Average);//打印计算好的成绩
+            fprintf(filep2,"\n\n");
             //  printf("\n");
             i++;
         }
