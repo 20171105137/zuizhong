@@ -109,7 +109,7 @@ int main()
     j=i;
      for(i=0;i<j;i++)
      {
-    s[0].max=s[0].min=s[0].result[0];
+    s[i].max=s[i].min=s[i].result[0];
      }
     i=j;
     for(i=0;i<j;i++)
