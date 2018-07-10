@@ -78,7 +78,7 @@ int main()
         
         while(!feof(filep1))//读取表头
         {
-            fscanf(filep1,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s",s[i].Stu_num,s[i].Name,s[i].Sex,&s[i].Birth,s[i].Class,s[i].Telph,s[i].Judge);
+            fscanf(filep1,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%s",s[i].Stu_num,s[i].Name,s[i].Sex,s[i].Birth,s[i].Class,s[i].Telph,s[i].Judge);
             for(a=0;a<d;a++)
             {
                 fscanf(filep1,",%d",&s[i].result[a]);//按照，分隔符
@@ -116,24 +116,24 @@ int main()
      }
     i=j;
     for(i=0;i<j;i++)
-{
+    {
     for(a=i;a<d;a++)//找最大最小值
-    {
-        if(s[i].result[a]>s[i].max)
-         s[i].max=s[i].result[a];
-        if(s[i].result[a]<s[i].min)
-         s[i].min=s[i].result[a];
+        {
+            if(s[i].result[a]>s[i].max)
+                s[i].max=s[i].result[a];
+            if(s[i].result[a]<s[i].min)
+                s[i].min=s[i].result[a];
+        }
     }
-}
     i=j;
-    for(i=0;i<j;i++)   //计算成绩
-{
-    for(a=0;a<d;a++)
-    {
-    s[i].score=s[i].result[a]+s[i].score;
-    }
-    s[i].Average=(s[i].score-s[i].max-s[i].min)/(d-2);
-}
+        for(i=0;i<j;i++)   //计算成绩
+        {
+            for(a=0;a<d;a++)
+            {
+                    s[i].score=s[i].result[a]+s[i].score;
+            }
+            s[i].Average=(s[i].score-s[i].max-s[i].min)/(d-2);
+        }
     j=i;
     i=0;
     filep2=fopen("/Users/s20171105137/Desktop/studentdata2.csv","w");//chuangjianxinwenjian
